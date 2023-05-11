@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+  <title>注册</title>
+</head>
+
+<body>
+  <form id="registerForm">
+    <div>
+      <label>用户名<input type="text" name="name"></label>
+    </div>
+    <div>
+      <label>密码<input type="text" name="password"></label>
+    </div>
+    <div>
+      <button type="submit">注册</button>
+    </div>
+  </form>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <!--这里引用bootCDN网站的jQuery库。jQuery内容直接下下面了，没创建新文件-->
+  <script>
+    const $form = $('#registerForm')
+    $form.on('submit', (e) => {
+      e.preventDefault()//阻止默认动作
+      const name = $form.find('input[name=name]').val()//获取name=name的值，
+      const password = $form.find('input[name=password]').val()
+      console.log(name, password)
+      $.ajax({
+        method: 'POST',
+        url: '/register',
+        contentType: 'text/json; charset=UTF-8',
+        data: JSON.stringify({ name, password }),
+      }).then(() => {
+        alert('注册成功')
+        location.href = '/sign_in.html'
+      }, () => { })
+      //用AJAX发送post请求将获得的(name, password)提交。
+      //提交后成功提示“注册成功”并跳转到sign_in页面
+    })
+  </script>
+</body>
+
+</html>
